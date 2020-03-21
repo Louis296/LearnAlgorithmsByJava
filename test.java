@@ -4,6 +4,8 @@
 public class test {
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        boolean result;
+        result=new canMeasureWater().go(2,6,5);
+        System.out.println(result);
     }
 }
