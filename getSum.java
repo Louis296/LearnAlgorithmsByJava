@@ -6,6 +6,7 @@ public class getSum {
     public int go(int a,int b){
         String a2=Integer.toBinaryString(a);
         String b2=Integer.toBinaryString(b);
+        //补全高位的0
         while(a2.length()<32){
             StringBuffer sa=new StringBuffer();
             sa.append("0").append(a2);
@@ -19,6 +20,7 @@ public class getSum {
         String res="";
         int up=0;
         int A,B;
+        //按位异或并考虑进位
         for(int i=31;i>=0;i--){
             A=Integer.parseInt(""+a2.charAt(i));
             B=Integer.parseInt(""+b2.charAt(i));
@@ -31,6 +33,7 @@ public class getSum {
             else
                 up=0;
         }
+        //将补码按位取反并加一
         if(res.charAt(0)=='1'){
             StringBuffer result=new StringBuffer(res);
             for(int i=31;i>=0;i--){
@@ -42,6 +45,7 @@ public class getSum {
             res=result.toString();
             return -1*(Integer.parseInt(res, 2)+1);
         }
+        //正数的补码直接转十进制即可
         return Integer.parseInt(res,2);
     }
 }
