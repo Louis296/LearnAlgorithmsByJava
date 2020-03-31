@@ -1,6 +1,7 @@
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * canMeasureWater
@@ -45,30 +46,91 @@ public class canMeasureWater {
                 return true;
             }
             else{
-                if(!haveSeen.contains(stateToString(emptyX(currentState)))){
-                    queue.offer(emptyX(currentState));
-                    haveSeen.add(stateToString(emptyX(currentState)));
+                for(int i=0;i<6;i++){
+                    int[] nextState;
+                    switch (i) {
+                        case 0:
+                            nextState=emptyX(currentState);
+                            break;
+                        case 1:
+                            nextState=emptyY(currentState);
+                            break;
+                        case 2:
+                            nextState=fillX(currentState, x);
+                            break;
+                        case 3:
+                            nextState=fillY(currentState, y);
+                            break;
+                        case 4:
+                            nextState=doXToY(currentState, y);
+                            break;
+                        case 5:
+                            nextState=doYToX(currentState, x);
+                            break;
+                        default:
+                            nextState=null;
+                            break;
+                    }
+                    if(!haveSeen.contains(stateToString(nextState))){
+                        queue.offer(nextState);
+                        haveSeen.add(stateToString(nextState));
+                    }
                 }
-                if(!haveSeen.contains(stateToString(emptyY(currentState)))){
-                    queue.offer(emptyY(currentState));
-                    haveSeen.add(stateToString(emptyY(currentState)));
+                
+                
+            }
+        }
+        return false;
+    }
+
+    public boolean goByDFS(int x,int y,int z){
+        int[] initialState={0,0};
+        
+        HashSet<String> haveSeen=new HashSet<>();
+        haveSeen.add(stateToString(initialState));
+
+        Stack<int[]> stack=new Stack<>();
+        stack.push(initialState);
+
+
+        while(!stack.isEmpty()){
+            int[] currentState=stack.pop();
+            if(currentState[0]+currentState[1]==z){
+                return true;
+            }
+            else{
+                for(int i=0;i<6;i++){
+                    int[] nextState;
+                    switch (i) {
+                        case 0:
+                            nextState=emptyX(currentState);
+                            break;
+                        case 1:
+                            nextState=emptyY(currentState);
+                            break;
+                        case 2:
+                            nextState=fillX(currentState, x);
+                            break;
+                        case 3:
+                            nextState=fillY(currentState, y);
+                            break;
+                        case 4:
+                            nextState=doXToY(currentState, y);
+                            break;
+                        case 5:
+                            nextState=doYToX(currentState, x);
+                            break;
+                        default:
+                            nextState=null;
+                            break;
+                    }
+                    if(!haveSeen.contains(stateToString(nextState))){
+                        stack.push(nextState);
+                        haveSeen.add(stateToString(nextState));
+                    }
                 }
-                if(!haveSeen.contains(stateToString(fillX(currentState, x)))){
-                    queue.offer(fillX(currentState, x));
-                    haveSeen.add(stateToString(fillX(currentState, y)));
-                }
-                if(!haveSeen.contains(stateToString(fillY(currentState, y)))){
-                    queue.offer(fillY(currentState, y));
-                    haveSeen.add(stateToString(fillY(currentState, y)));
-                }
-                if(!haveSeen.contains(stateToString(doXToY(currentState, y)))){
-                    queue.offer(doXToY(currentState, y));
-                    haveSeen.add(stateToString(doXToY(currentState, y)));
-                }
-                if(!haveSeen.contains(stateToString(doYToX(currentState, x)))){
-                    queue.offer(doYToX(currentState, x));
-                    haveSeen.add(stateToString(doYToX(currentState, x)));
-                }
+                
+                
             }
         }
         return false;
